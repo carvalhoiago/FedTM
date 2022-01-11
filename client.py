@@ -43,7 +43,7 @@ if __name__ == "__main__":
             #create a learning rate callback
             lr_scheduler = tf.keras.callbacks.LearningRateScheduler(lambda epoch : 1e-3 *10**(epoch/20) )
             model.set_weights(parameters)
-            model.fit(x_train, y_train, epochs=40, callbacks=[lr_scheduler])
+            model.fit(x_train, y_train, epochs=35, callbacks=[lr_scheduler])
             return model.get_weights(), len(x_train), {}
 
         def evaluate(self, parameters, config):  # type: ignore
