@@ -11,7 +11,7 @@ def get_eval_fn(model):
   """Return an evaluation function for server-side evaluation."""
 
   # Load test data here to avoid the overhead of doing it in `evaluate` itself
-  x_test, y_test = utils.load_data('test.csv')
+  x_test, y_test = utils.load_data('test.csv', 15)
 
   # The `evaluate` function will be called after every round
   def evaluate(parameters):
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     #create the model
     model=tf.keras.Sequential([
       tf.keras.Input(shape=(24,)),
-      tf.keras.layers.Dense(10,activation="relu"),
+      tf.keras.layers.Dense(48,activation="relu"),
       tf.keras.layers.Dense(4,activation="softmax")
     ])
 
@@ -48,4 +48,4 @@ if __name__ == "__main__":
         on_fit_config_fn=fit_round,
     )
   
-    fl.server.start_server("0.0.0.0:8080", strategy=strategy, config={"num_rounds": 3})
+    fl.server.start_server("0.0.0.0:8080", strategy=strategy, config={"num_rounds": 2})

@@ -19,7 +19,7 @@ if __name__ == "__main__":
     #create the model
     model=tf.keras.Sequential([
       tf.keras.Input(shape=(24,)),
-      tf.keras.layers.Dense(10,activation="relu"),
+      tf.keras.layers.Dense(48,activation="relu"),
       tf.keras.layers.Dense(4,activation="softmax")
     ])
 
@@ -31,8 +31,8 @@ if __name__ == "__main__":
     )
 
     # Load train and test datasets
-    x_train, y_train = utils.load_data(filename)
-    x_test, y_test = utils.load_data('test.csv')
+    x_train, y_train = utils.load_data(filename, 39)
+    x_test, y_test = utils.load_data('test.csv', 15)
 
     # Define Flower client
     class TransportClient(fl.client.NumPyClient):
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             #create a learning rate callback
             lr_scheduler = tf.keras.callbacks.LearningRateScheduler(lambda epoch : 1e-3 *10**(epoch/20) )
             model.set_weights(parameters)
-            model.fit(x_train, y_train, epochs=35, callbacks=[lr_scheduler])
+            model.fit(x_train, y_train, epochs=27, callbacks=[lr_scheduler])
             return model.get_weights(), len(x_train), {}
 
         def evaluate(self, parameters, config):  # type: ignore
